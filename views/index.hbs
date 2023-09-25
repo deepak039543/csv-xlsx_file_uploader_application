@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>file uploader</title>
+        <style>
+        body {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -250px;
+            width: 500px;
+            height: 200px;
+            border: 4px dashed #fff;
+        }
+
+        form p {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 170px;
+            color: #ffffff;
+            font-family: Arial;
+        }
+
+        form input {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            outline: none;
+            opacity: 0;
+        }
+
+        form button {
+            margin: 0;
+            color: #fff;
+            background: #16a085;
+            border: none;
+            width: 508px;
+            height: 35px;
+            margin-top: -20px;
+            margin-left: -4px;
+            border-radius: 4px;
+            border-bottom: 4px solid #117A60;
+            transition: all .2s ease;
+            outline: none;
+        }
+
+        form button:hover {
+            background: #149174;
+            color: #0C5645;
+        }
+
+        form button:active {
+            border: 0;
+        }
+
+        .error-message {
+            color: red;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .jadu {
+            color: red;
+
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <div class="jadu" id="selectedFileName"></div>
+        <div class="drop-box">
+            {{!-- here is the form for sending "CSV and XLSX" file --}}
+            <form action="/index" method="POST" enctype="multipart/form-data"
+                onsubmit="showSuccessAlert()">
+                <label for="csvFile">
+                    <input type="file" name="file" accept=".csv,.xlsx"
+                        id="fileID" onchange="fileSelect()">
+
+                    <p>Drag your files here or click in this area.</p>
+
+                    <button type="submit">Upload</button>
+                </label>
+            </form>
+            {{#if error}}
+            <div class="error-message">
+                {{error}}
+            </div>
+            {{/if}}
+
+        </div>
+
+    </body>
+
+    <script>
+    $(document).ready(function () {
+        $('form input').change(function () {
+            $('form p').text(this.files.length + " file(s) selected");
+        });
+    });
+
+    //here is the function for handle selected file
+    function fileSelect() {
+        const fileInput = document.getElementById("fileID");
+        const selectedFileName = document.getElementById("selectedFileName");
+        if (fileInput.files.length > 0) {
+            selectedFileName.textContent = "Selected File: " + fileInput.files[0].name;
+            // Display an alert for successful file selection
+            alert("File has been selected. Click the 'Upload' button to proceed.");
+        } else {
+            selectedFileName.textContent = "No file selected";
+            // Display an error alert for no file selected
+            alert("No file selected. Please choose a file.");
+        }
+
+    }
+
+
+
+</script>
+
+</html>
